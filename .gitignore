@@ -1,0 +1,10 @@
+*.iml
+.gradle
+.DS_Store
+/build/
+/captures
+.externalNativeBuild
+LocTrac/libs/
+commons/libs/
+corelibs/libs/
+libs/
