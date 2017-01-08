@@ -7,8 +7,6 @@ package corelibs.data;
 
 public class LocationData {
 
-
-  private long _id; // Auto sequence id
   private long _startTime;
   private long _duration;
 
@@ -16,16 +14,11 @@ public class LocationData {
   private long _lat;
   private long _longitude;
 
-  public LocationData(long id, long startTime, long duration, long lat, long longitude) {
-    _id = id;
+  public LocationData(long startTime, long duration, long lat, long longitude) {
     _startTime = startTime;
     _duration = duration;
     _lat = lat;
     _longitude = longitude;
-  }
-
-  public long getId() {
-    return _id;
   }
 
   public long getStartTime() {
@@ -46,8 +39,7 @@ public class LocationData {
 
   @Override
   public String toString() {
-    return "ID: " + String.valueOf(_id)
-        + " START TIME: " + String.valueOf(_startTime)
+    return " START TIME: " + String.valueOf(_startTime)
         + " DURATION " + String.valueOf(_duration)
         + " LATITUDE " + String.valueOf(_lat)
         + " LONGITUDE " + String.valueOf(_longitude);

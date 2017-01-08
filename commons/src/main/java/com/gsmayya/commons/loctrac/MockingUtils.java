@@ -13,8 +13,7 @@ import java.util.Random;
 
 public class MockingUtils {
 
-  public static final String TABLE_WDIG_LOCATION = "wdig_location";
-  public static final String KEY_ID = "id";
+  public static final String TABLE_WDIG_LOCATION = "wdig_location_2";
   public static final String KEY_START_TIME = "start_time";
   public static final String KEY_DURATION = "duration";
   public static final String KEY_LAT = "latitude";
@@ -23,7 +22,6 @@ public class MockingUtils {
   public static SchemaData schema = new SchemaData(TABLE_WDIG_LOCATION);
 
   static {
-    schema.addField(KEY_ID, "integer");
     schema.addField(KEY_START_TIME, "integer");
     schema.addField(KEY_DURATION, "integer");
     schema.addField(KEY_LAT, "integer");
@@ -33,7 +31,7 @@ public class MockingUtils {
   public static List<LocationData> getLocationData() {
     List<LocationData> locationDataList = new ArrayList<>();
     for (int i = 0; i < 10; i++) {
-      LocationData locationData = new LocationData(i,
+      LocationData locationData = new LocationData(
           System.currentTimeMillis(),
           10,
           i * new Random().nextInt(),

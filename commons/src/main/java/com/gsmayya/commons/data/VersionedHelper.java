@@ -23,6 +23,7 @@ public class VersionedHelper extends SQLiteOpenHelper {
 
   public VersionedHelper(Context context, String createSql, String tableName) {
     super(context, DATABASE_NAME, null, DATABASE_VERSION);
+    Log.i(DATABASE_NAME, createSql);
     _createTable = createSql;
     _tableName = tableName;
   }

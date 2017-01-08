@@ -18,6 +18,7 @@ public abstract class VersionedData {
   public VersionedData(Context context, SchemaData schema) {
     _schema = schema;
     _versionedHelper = new VersionedHelper(context, getCreateSql(), _schema.getTableName());
+
   }
 
   protected String getCreateSql() {

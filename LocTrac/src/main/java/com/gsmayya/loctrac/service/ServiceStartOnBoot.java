@@ -11,15 +11,19 @@ import android.util.Log;
  */
 
 public class ServiceStartOnBoot extends Service {
+
+  private static final String SERVICE = "SERVICETAG";
+
   @Nullable
   @Override
   public IBinder onBind(Intent intent) {
+    Log.i(SERVICE, "Service running..");
     return null;
   }
 
   @Override
   public void onCreate() {
     super.onCreate();
-    Log.i("SERVICE", "Service running..");
+    Log.i(SERVICE, "Service running..");
   }
 }

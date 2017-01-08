@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.gsmayya.commons.loctrac.MockingUtils.KEY_DURATION;
-import static com.gsmayya.commons.loctrac.MockingUtils.KEY_ID;
 import static com.gsmayya.commons.loctrac.MockingUtils.KEY_LAT;
 import static com.gsmayya.commons.loctrac.MockingUtils.KEY_LONG;
 import static com.gsmayya.commons.loctrac.MockingUtils.KEY_START_TIME;
@@ -30,7 +29,6 @@ public class LocationDatabase extends VersionedData {
   public void addRecord(LocationData locationData) {
     _dataList.add(locationData);
     ContentValues contentValues = new ContentValues();
-    contentValues.put(KEY_ID, locationData.getId());
     contentValues.put(KEY_START_TIME, locationData.getStartTime());
     contentValues.put(KEY_DURATION, locationData.getDuration());
     contentValues.put(KEY_LAT, locationData.getLat());
