@@ -1,4 +1,4 @@
-package com.gsmayya.loctrac.commons;
+package com.gsmayya.corelibs.schema;
 
 
 import java.util.ArrayList;

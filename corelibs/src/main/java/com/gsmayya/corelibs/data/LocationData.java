@@ -1,4 +1,4 @@
-package com.gsmayya.corelibs;
+package com.gsmayya.corelibs.data;
 
 /**
  * Created by gsmayya on 1/7/17.

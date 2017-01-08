@@ -1,8 +1,11 @@
-package com.gsmayya.loctrac.commons;
+package com.gsmayya.commons.data;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+
+import com.gsmayya.corelibs.schema.SchemaData;
+import com.gsmayya.corelibs.schema.SchemaField;
 
 /**
  * Created by gsmayya on 1/7/17.

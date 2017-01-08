@@ -1,4 +1,4 @@
-package com.gsmayya.loctrac.commons;
+package com.gsmayya.commons.data;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

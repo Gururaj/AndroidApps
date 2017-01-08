@@ -8,8 +8,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.gsmayya.corelibs.LocationData;
-import com.gsmayya.loctrac.commons.LocationDatabase;
+import com.gsmayya.corelibs.data.LocationData;
+import com.gsmayya.commons.loctrac.LocationDatabase;
+import com.gsmayya.commons.loctrac.MockingUtils;
 
 import java.util.List;
 
@@ -26,11 +27,8 @@ public class MainActivity extends AppCompatActivity {
 
     LocationDatabase locationDatabase = new LocationDatabase(this);
 
-    for (LocationData locationData : LocationDatabase.getLocationData()) {
-      locationDatabase.addRecord(locationData);
-    }
-
     // hacky method for now.
+    mockAddData(locationDatabase);
     List<String> values = locationDatabase.getValues();
 
     ArrayAdapter<String> adapter = new ArrayAdapter<>(
@@ -53,5 +51,11 @@ public class MainActivity extends AppCompatActivity {
             .show();
       }
     });
+  }
+
+  private void mockAddData(LocationDatabase locationDatabase) {
+    for (LocationData locationData :  MockingUtils.getLocationData()) {
+      locationDatabase.addRecord(locationData);
+    }
   }
 }

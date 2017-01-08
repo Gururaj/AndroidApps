@@ -1,50 +1,27 @@
-package com.gsmayya.loctrac.commons;
+package com.gsmayya.commons.loctrac;
 
 import android.content.ContentValues;
 import android.content.Context;
 
-import com.gsmayya.corelibs.LocationData;
+import com.gsmayya.corelibs.data.LocationData;
+import com.gsmayya.commons.data.VersionedData;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+
+import static com.gsmayya.commons.loctrac.MockingUtils.KEY_DURATION;
+import static com.gsmayya.commons.loctrac.MockingUtils.KEY_ID;
+import static com.gsmayya.commons.loctrac.MockingUtils.KEY_LAT;
+import static com.gsmayya.commons.loctrac.MockingUtils.KEY_LONG;
+import static com.gsmayya.commons.loctrac.MockingUtils.KEY_START_TIME;
+import static com.gsmayya.commons.loctrac.MockingUtils.schema;
 
 /**
  * Created by gsmayya on 1/7/17.
  */
 public class LocationDatabase extends VersionedData {
 
-  private static final String TABLE_WDIG_LOCATION = "wdig_location";
-  private static final String KEY_ID = "id";
-  private static final String KEY_START_TIME = "start_time";
-  private static final String KEY_DURATION = "duration";
-  private static final String KEY_LAT = "latitude";
-  private static final String KEY_LONG = "longitude";
-
-  private static SchemaData schema = new SchemaData(TABLE_WDIG_LOCATION);
-
-  static {
-    schema.addField(KEY_ID, "integer");
-    schema.addField(KEY_START_TIME, "integer");
-    schema.addField(KEY_DURATION, "integer");
-    schema.addField(KEY_LAT, "integer");
-    schema.addField(KEY_LONG, "integer");
-  }
-
   private List<LocationData> _dataList = new ArrayList<>();
-
-  public static List<LocationData> getLocationData() {
-    List<LocationData> locationDataList = new ArrayList<>();
-    for (int i = 0; i < 10; i++) {
-      LocationData locationData = new LocationData(i,
-          System.currentTimeMillis(),
-          10,
-          i * new Random().nextInt(),
-          i * new Random().nextInt());
-      locationDataList.add(locationData);
-    }
-    return locationDataList;
-  }
 
   public LocationDatabase(Context context) {
     super(context, schema);
