@@ -2,6 +2,30 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.gsmayya.loctrac.loctrac">
 
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"></uses-permission>
+
+    <receiver
+        android:name="com.gsmayya.loctrac.service.BroadcastReceiverOnBoot"
+        android:enabled="true"
+        android:exported="false">
+
+        <intent-filter>
+            <action android:name="android.intent.action.BOOT_COMPLETED"/>
+        </intent-filter>
+        <intent-filter>
+            <action android:name="android.intent.action.PACKAGE_REPLACED"/>
+            <data android:scheme="package"/>
+        </intent-filter>
+
+        <intent-filter>
+            <action android:name="android.intent.action.PACKAGE_ADDED"/>
+            <data android:scheme="package"/>
+        </intent-filter>
+    </receiver>
+
+    <service android:name="com.gsmayya.loctrac.service.ServiceStartOnBoot"></service>
+
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -11,7 +35,6 @@
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
-
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>

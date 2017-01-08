@@ -1,1 +1,1 @@
-include ':LocTrac', ':commons', ':corelibs'
+include ':LocTrac', ':commons'

@@ -8,7 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.gsmayya.corelibs.data.LocationData;
+import corelibs.data.LocationData;
 import com.gsmayya.commons.loctrac.LocationDatabase;
 import com.gsmayya.commons.loctrac.MockingUtils;
 

@@ -1,4 +1,4 @@
-package com.gsmayya.corelibs.schema;
+package corelibs.schema;
 
 
 import java.util.ArrayList;

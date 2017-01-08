@@ -3,7 +3,7 @@ package com.gsmayya.commons.loctrac;
 import android.content.ContentValues;
 import android.content.Context;
 
-import com.gsmayya.corelibs.data.LocationData;
+import corelibs.data.LocationData;
 import com.gsmayya.commons.data.VersionedData;
 
 import java.util.ArrayList;

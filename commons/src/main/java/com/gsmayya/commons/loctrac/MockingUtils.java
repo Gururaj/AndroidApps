@@ -1,7 +1,7 @@
 package com.gsmayya.commons.loctrac;
 
-import com.gsmayya.corelibs.data.LocationData;
-import com.gsmayya.corelibs.schema.SchemaData;
+import corelibs.data.LocationData;
+import corelibs.schema.SchemaData;
 
 import java.util.ArrayList;
 import java.util.List;

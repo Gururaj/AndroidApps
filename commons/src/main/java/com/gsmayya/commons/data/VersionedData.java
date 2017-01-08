@@ -4,8 +4,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.gsmayya.corelibs.schema.SchemaData;
-import com.gsmayya.corelibs.schema.SchemaField;
+import corelibs.schema.SchemaData;
+import corelibs.schema.SchemaField;
 
 /**
  * Created by gsmayya on 1/7/17.
