@@ -5,52 +5,88 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.TextView;
 
-import java.util.HashMap;
 import java.util.List;
 
-import corelibs.location.LocationData;
-
 /**
- * Created by gsmayya on 1/21/17.
+ *
+ * @param <T> Type of parameter
  */
-
 public abstract class ListViewListener<T> extends BaseAdapter {
 
-  private List<T> _list;
-  Activity _activity;
+  /**
+   *
+   */
+  private List<T> typeList;
+  /**
+   *
+   */
+  private Activity activity;
 
-  public ListViewListener(List<T> list, Activity activity) {
-    _list = list;
-    _activity = activity;
+  /**
+   *
+   * @param list List
+   * @param a Activity
+   */
+  public ListViewListener(final List<T> list, final Activity a) {
+    this.typeList = list;
+    this.activity = a;
   }
 
-  public List<T> getList() {
-    return _list;
+  /**
+   *
+   * @return Lists
+   */
+  public List<T> getTypeList() {
+    return typeList;
   }
 
+  /**
+   *
+   * @return Activity
+   */
   public Activity getActivity() {
-    return _activity;
+    return activity;
   }
 
+  /**
+   *
+   * @return Count
+   */
   @Override
   public int getCount() {
-    return _list.size();
+    return typeList.size();
   }
 
+  /**
+   *
+   * @param position Integer
+   * @return Object
+   */
   @Override
-  public Object getItem(int position) {
-    return _list.get(position);
+  public Object getItem(final int position) {
+    return typeList.get(position);
   }
 
+  /**
+   *
+   * @param position Integer
+   * @return Item Id
+   */
   @Override
-  public long getItemId(int position) {
+  public long getItemId(final int position) {
     return 0;
   }
 
+  /**
+   *
+   * @param position Position
+   * @param convertView Converted view
+   * @param parent Parent group
+   * @return ConvertedView
+   */
   @Override
-  public View getView(int position, View convertView, ViewGroup parent) {
+  public View getView(final int position, View convertView, final ViewGroup parent) {
     LayoutInflater inflater = getActivity().getLayoutInflater();
     if (convertView == null) {
       convertView = populateTextViews(inflater);
@@ -59,11 +95,24 @@ public abstract class ListViewListener<T> extends BaseAdapter {
     return convertView;
   }
 
+  /**
+   *
+   * @param position Position
+   */
   public abstract void fillTextViews(int position);
 
+  /**
+   *
+   * @param inflater Infalter
+   * @return CreatedView
+   */
   public abstract View populateTextViews(LayoutInflater inflater);
 
-  public void add(T value) {
-    _list.add(value);
+  /**
+   *
+   * @param value Value to add
+   */
+  public void add(final T value) {
+    typeList.add(value);
   }
 }

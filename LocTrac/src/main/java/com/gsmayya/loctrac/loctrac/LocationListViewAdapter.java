@@ -30,7 +30,7 @@ public class LocationListViewAdapter extends ListViewListener<LocationData> {
   @Override
   public View getView(int position, View convertView, ViewGroup parent) {
     LayoutInflater inflater = getActivity().getLayoutInflater();
-    LocationData locationData = getList().get(position);
+    LocationData locationData = getTypeList().get(position);
 
     if (convertView == null) {
       convertView = inflater.inflate(R.layout.column_row, null);
@@ -50,7 +50,7 @@ public class LocationListViewAdapter extends ListViewListener<LocationData> {
 
   @Override
   public void fillTextViews(int position) {
-    LocationData locationData = getList().get(position);
+    LocationData locationData = getTypeList().get(position);
     txtTimeStamp.setText(String.valueOf(locationData.getStartTime()));
     txtDuration.setText(String.valueOf(locationData.getDuration()));
     txtLatitude.setText(String.valueOf(locationData.getLatitude()));

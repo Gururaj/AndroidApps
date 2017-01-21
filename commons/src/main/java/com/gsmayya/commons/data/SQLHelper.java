@@ -83,8 +83,7 @@ class SQLHelper extends SQLiteOpenHelper {
    */
   private long getMaxIdFromDB(SQLiteDatabase db, String maxSql) {
     Log.i(TAG, "MaxId request sql " + maxSql);
-    Cursor cursor = db.rawQuery(maxSql, null);
-    try {
+    try (Cursor cursor = db.rawQuery(maxSql, null)) {
       if (cursor.getCount() > 0) {
         cursor.moveToFirst();
         long max = cursor.getInt(cursor.getColumnIndex(_idColumn.getFieldName()));
@@ -94,8 +93,6 @@ class SQLHelper extends SQLiteOpenHelper {
       }
     } catch (Exception e) {
       Log.e("Error", "Cannot get max from table ", e);
-    } finally {
-      cursor.close();
     }
     return 0;
   }
