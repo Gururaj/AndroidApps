@@ -10,17 +10,35 @@ import org.apache.commons.lang3.tuple.Pair;
 
 public class SchemaField {
 
-  private static Pair<String, String> _pair;
+  private Pair<String, SchemaType> _pair;
+  private boolean _isId;
 
-  public SchemaField(String fieldName, String fieldType) {
+  public SchemaField(String fieldName, SchemaType fieldType) {
+    this(fieldName, fieldType, false);
+  }
+
+  public SchemaField(String fieldName, SchemaType fieldType, boolean isId) {
     _pair = new ImmutablePair<>(fieldName, fieldType);
+    _isId = isId;
+  }
+
+  public boolean isId() {
+    return _isId;
   }
 
   public String getFieldName() {
     return _pair.getLeft();
   }
 
-  public String getFieldType() {
+  public SchemaType getFieldType() {
     return _pair.getRight();
+  }
+
+  private String internalDBCreate() {
+    return getFieldName() + " " + getFieldType().getDbTypeName();
+  }
+
+  public String getDBCreate() {
+    return (_isId)? internalDBCreate() + " PRIMARY KEY":internalDBCreate();
   }
 }

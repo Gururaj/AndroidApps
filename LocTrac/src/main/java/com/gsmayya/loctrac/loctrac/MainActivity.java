@@ -1,6 +1,5 @@
 package com.gsmayya.loctrac.loctrac;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -9,10 +8,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import corelibs.data.LocationData;
-import com.gsmayya.commons.loctrac.LocationDatabase;
-import com.gsmayya.commons.loctrac.MockingUtils;
-import com.gsmayya.loctrac.service.ServiceStartOnBoot;
+import com.gsmayya.loctrac.data.LocationData;
+import com.gsmayya.loctrac.data.LocationDatabase;
 
 import java.util.List;
 
@@ -29,8 +26,8 @@ public class MainActivity extends AppCompatActivity {
 
     LocationDatabase locationDatabase = new LocationDatabase(this);
 
-    Intent serviceIntent = new Intent(this, ServiceStartOnBoot.class);
-    this.startService(serviceIntent);
+//    Intent serviceIntent = new Intent(this, ServiceStartOnBoot.class);
+//    this.startService(serviceIntent);
     // hacky method for now.
     mockAddData(locationDatabase);
     List<String> values = locationDatabase.getValues();
@@ -58,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
   }
 
   private void mockAddData(LocationDatabase locationDatabase) {
-    for (LocationData locationData :  MockingUtils.getLocationData()) {
+    for (LocationData locationData :  LocationData.getMockedData()) {
       locationDatabase.addRecord(locationData);
     }
   }

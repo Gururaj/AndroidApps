@@ -39,4 +39,5 @@ dependencies {
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.0'
     // https://mvnrepository.com/artifact/com.google.guava/guava
     compile group: 'com.google.guava', name: 'guava', version: '19.0'
+    compile 'org.chalup.microorm:microorm:0.7.0'
 }
