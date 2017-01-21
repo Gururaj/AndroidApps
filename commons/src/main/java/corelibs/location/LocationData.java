@@ -1,23 +1,17 @@
-package com.gsmayya.loctrac.data;
+package corelibs.location;
 
 import android.content.ContentValues;
 
 import org.chalup.microorm.annotations.Column;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
-import corelibs.data.Data;
+import com.gsmayya.commons.data.Data;
 import corelibs.schema.SchemaData;
 import corelibs.schema.SchemaType;
 
 /**
  * Created by gsmayya on 1/7/17.
  */
-
-
-public class LocationData extends Data {
+public class LocationData implements Data {
 
   private static final String KEY_START_TIME = "start_time";
   private static final String TABLE_WDIG_LOCATION = "wdig_location_2";
@@ -26,14 +20,17 @@ public class LocationData extends Data {
   private static final String KEY_LAT = "latitude";
   private static final String KEY_LONG = "longitude";
 
+  /**
+   *
+   */
   static SchemaData schema = new SchemaData(LocationData.TABLE_WDIG_LOCATION, new LocationData());
 
   static {
     schema.addId(LocationData.KEY_ID, SchemaType.INT);
     schema.addField(LocationData.KEY_START_TIME, SchemaType.INT);
     schema.addField(LocationData.KEY_DURATION, SchemaType.INT);
-    schema.addField(LocationData.KEY_LAT, SchemaType.INT);
-    schema.addField(LocationData.KEY_LONG, SchemaType.INT);
+    schema.addField(LocationData.KEY_LAT, SchemaType.DOUBLE);
+    schema.addField(LocationData.KEY_LONG, SchemaType.DOUBLE);
   }
 
   @Column(LocationData.KEY_START_TIME)
@@ -44,10 +41,10 @@ public class LocationData extends Data {
 
   //private Location location; //get gps coordinates as separate
   @Column(LocationData.KEY_LAT)
-  private long _lat;
+  private double _latitude;
 
   @Column(LocationData.KEY_LONG)
-  private long _longitude;
+  private double _longitude;
 
   public long getStartTime() {
     return _startTime;
@@ -57,11 +54,11 @@ public class LocationData extends Data {
     return _duration;
   }
 
-  public long getLat() {
-    return _lat;
+  public double getLatitude() {
+    return _latitude;
   }
 
-  public long getLongitude() {
+  public double getLongitude() {
     return _longitude;
   }
 
@@ -73,11 +70,11 @@ public class LocationData extends Data {
     _duration = duration;
   }
 
-  public void setLat(long lat) {
-    _lat = lat;
+  public void setLatitude(double latitude) {
+    _latitude = latitude;
   }
 
-  public void setLongitude(long longitude) {
+  public void setLongitude(double longitude) {
     _longitude = longitude;
   }
 
@@ -85,30 +82,17 @@ public class LocationData extends Data {
   public String toString() {
     return " START TIME: " + String.valueOf(_startTime)
         + " DURATION " + String.valueOf(_duration)
-        + " LATITUDE " + String.valueOf(_lat)
+        + " LATITUDE " + String.valueOf(_latitude)
         + " LONGITUDE " + String.valueOf(_longitude);
   }
 
-
-  public static List<LocationData> getMockedData() {
-    List<LocationData> locationDataList = new ArrayList<>();
-    for (int i = 0; i < 10; i++) {
-      LocationData locationData = new LocationData();
-      locationData.setStartTime(System.currentTimeMillis());
-      locationData.setDuration(10);
-      locationData.setLat((i+1) * new Random().nextInt());
-      locationData.setLongitude((i+1) * new Random().nextInt());
-      locationDataList.add(locationData);
-    }
-    return locationDataList;
-  }
-
+  @Override
   public ContentValues addRecord(long id) {
     ContentValues contentValues = new ContentValues();
     contentValues.put(KEY_ID, id);
     contentValues.put(KEY_START_TIME, getStartTime());
     contentValues.put(KEY_DURATION, getDuration());
-    contentValues.put(KEY_LAT, getLat());
+    contentValues.put(KEY_LAT, getLatitude());
     contentValues.put(KEY_LONG, getLongitude());
     return contentValues;
   }

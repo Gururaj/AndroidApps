@@ -14,17 +14,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
-import corelibs.data.Data;
 import corelibs.schema.SchemaData;
 import corelibs.schema.SchemaField;
 
 /**
  * Created by gsmayya on 1/7/17.
  */
+class SQLHelper extends SQLiteOpenHelper {
 
-public class SQLHelper extends SQLiteOpenHelper {
-
-  private static final String TAG = SQLHelper.class.getName();
+  private static final String TAG = "SQLHELPER";
 
   // Database Version
   private static final int DATABASE_VERSION = 1;
@@ -36,26 +34,37 @@ public class SQLHelper extends SQLiteOpenHelper {
   private final SchemaField _idColumn;
   private final SchemaData _schema;
 
-  public SQLHelper(Context context, SchemaData schema) {
+  /**
+   *
+   * @param context
+   * @param schema
+   */
+  SQLHelper(Context context, SchemaData schema) {
     super(context, DATABASE_NAME, null, DATABASE_VERSION);
     _schema = schema;
     _tableName = _schema.getTableName();
     _idColumn = schema.getIdField();
     _id = new AtomicLong(getMaxIdFromDB(getReadableDatabase(), getMaxSql()));
-    Log.i(DATABASE_NAME, getCreateSql());
   }
 
-  public long getNextId() {
+  /**
+   *
+   * @return
+   */
+  long getNextId() {
     return _id.incrementAndGet();
   }
 
-  // TODO: Should remove access to locationdata here. Should find a pattern to get that
-  public List<Data> getRowList() {
+  /**
+   *
+   * @return
+   */
+  List<Data> getRowList() {
     String sql = "select "
         + Joiner.on(",").join(_schema.getColumns())
         + " from " + _tableName;
     List<Data> datas = new ArrayList<>();
-    Log.i(TAG + "_ROW", sql);
+    Log.i(TAG, "Row request sql " + sql);
     MicroOrm orm = new MicroOrm();
 
     try (Cursor cursor = getReadableDatabase().rawQuery(sql, null)) {
@@ -66,8 +75,14 @@ public class SQLHelper extends SQLiteOpenHelper {
     return datas;
   }
 
+  /**
+   *
+   * @param db
+   * @param maxSql
+   * @return
+   */
   private long getMaxIdFromDB(SQLiteDatabase db, String maxSql) {
-    Log.i(TAG + "_MAX", maxSql);
+    Log.i(TAG, "MaxId request sql " + maxSql);
     Cursor cursor = db.rawQuery(maxSql, null);
     try {
       if (cursor.getCount() > 0) {
@@ -85,19 +100,33 @@ public class SQLHelper extends SQLiteOpenHelper {
     return 0;
   }
 
+  /**
+   *
+   * @param sqLiteDatabase
+   */
   @Override
   public void onCreate(SQLiteDatabase sqLiteDatabase) {
-    Log.i(TAG + "_CREATE", getCreateSql());
+    Log.i(TAG, "Create sql " + getCreateSql());
     sqLiteDatabase.execSQL(getCreateSql());
   }
 
+  /**
+   *
+   * @param sqLiteDatabase
+   * @param i
+   * @param i1
+   */
   @Override
   public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-    Log.i(TAG + "_UPGRADE", _tableName);
+    Log.i(TAG, "Update sql " + _tableName);
     sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + _tableName);
     onCreate(sqLiteDatabase);
   }
 
+  /**
+   *
+   * @return
+   */
   private String getMaxSql() {
     return "SELECT MAX("
         + _idColumn.getFieldName()
@@ -106,6 +135,10 @@ public class SQLHelper extends SQLiteOpenHelper {
         + " from " + _tableName;
   }
 
+  /**
+   *
+   * @return
+   */
   private String getCreateSql() {
     return "CREATE TABLE " + _tableName + "("
         + Joiner.on(",").join(_schema.getDBCreateColumns())

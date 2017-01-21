@@ -1,21 +1,33 @@
 package com.gsmayya.loctrac.loctrac;
 
+import android.Manifest;
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.gsmayya.loctrac.data.LocationData;
-import com.gsmayya.loctrac.data.LocationDatabase;
+import corelibs.location.LocationData;
+import corelibs.location.LocationDatabase;
+import corelibs.listener.MyLocationListener;
 
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+  private static final String ACTIVITY = "MAIN";
+
   ListView listView;
+  LocationDatabase locationDatabase;
+  MyLocationListener myListener;
+  LocationListViewAdapter _adapter;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -23,40 +35,47 @@ public class MainActivity extends AppCompatActivity {
     setContentView(R.layout.activity_main);
 
     listView = (ListView) findViewById(R.id.listView);
+    // setup database
+    locationDatabase = new LocationDatabase(this);
+    // set up location
+    LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
-    LocationDatabase locationDatabase = new LocationDatabase(this);
+    // get current list of values
+    List<LocationData> values = locationDatabase.getValues();
 
-//    Intent serviceIntent = new Intent(this, ServiceStartOnBoot.class);
-//    this.startService(serviceIntent);
-    // hacky method for now.
-    mockAddData(locationDatabase);
-    List<String> values = locationDatabase.getValues();
+    // need to create column list
+    _adapter = new LocationListViewAdapter(this, values);
 
-    ArrayAdapter<String> adapter = new ArrayAdapter<>(
-        this,
-        android.R.layout.simple_list_item_1,
-        android.R.id.text1,
-        values
-    );
+    listView.setAdapter(_adapter);
 
-    listView.setAdapter(adapter);
+    myListener = new LocTracLocationListener(locationDatabase, _adapter);
+    setLocationManager(locationManager, myListener);
 
-    listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
       @Override
       public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-        int itemPosition = position;
-        String itemValue = (String) listView.getItemAtPosition(position);
+        LocationData itemValue = (LocationData) listView.getItemAtPosition(position);
         Toast.makeText(getApplicationContext(),
-            "Position " + itemPosition + " List Item " + itemValue, Toast.LENGTH_LONG)
+            itemValue + " Clicked", Toast.LENGTH_SHORT)
             .show();
       }
     });
   }
 
-  private void mockAddData(LocationDatabase locationDatabase) {
-    for (LocationData locationData :  LocationData.getMockedData()) {
-      locationDatabase.addRecord(locationData);
+  private void setLocationManager(LocationManager locationManager, LocationListener locationListener) {
+    // long minTime = 10 * 60 * 1000;
+    long minTime = 6 * 1000;
+    long minDistance = 0;
+
+    if (ActivityCompat.checkSelfPermission(this,
+        Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+        && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+        != PackageManager.PERMISSION_GRANTED) {
+      Log.i(ACTIVITY, "Permissions not available. Should find out to request");
+      return;
     }
+    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, minTime, minDistance, locationListener);
   }
+
 }

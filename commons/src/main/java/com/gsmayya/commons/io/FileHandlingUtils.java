@@ -9,7 +9,6 @@ import java.io.InputStreamReader;
 /**
  * Created by gsmayya on 1/8/17.
  */
-
 public class FileHandlingUtils {
 
   // Might have to redesign. Currently best design.
